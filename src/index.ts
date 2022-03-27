@@ -160,8 +160,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     // Listen for path selection signals and show the selected files in the appropriate
     // editor/viewer
     widget.pathSelected.connect((sender: QuickOpenWidget, path: string) => {
-      labShell.activateById("filebrowser")
-      docManager.openOrReveal(PathExt.normalize(path));
+      const filePath = PathExt.normalize(path);
+      app.commands.execute('filebrowser:activate', { path: filePath});
+      app.commands.execute('filebrowser:go-to-path', { path: filePath });
     });
 
     // Listen for setting changes and apply them to the widget
